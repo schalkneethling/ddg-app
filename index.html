@@ -1,13 +1,2153 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Schalk Neethling — Senior Frontend Engineer, React/TypeScript · DuckDuckGo Application
+    </title>
+    <meta
+      name="description"
+      content="Application for Senior Frontend Engineer, React/TypeScript at DuckDuckGo. Open Source. Open Web. Open Access."
+    />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>duckduckgo-app</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="DDG" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ---------- TOKENS ---------- */
+      :root {
+        /* Colours */
+        --colour-orange: #de5833;
+        --colour-orange-deep: #9c452d;
+        --colour-orange-soft: #fce8e1;
+        --colour-cream: #faf6f0;
+        --colour-cream-warm: #fff9f0;
+        --colour-ink: #14130f;
+        --colour-ink-soft: #2b2a26;
+        --colour-mute: #5a564f;
+        --colour-rule: #e6e0d6;
+        --colour-leaf: #6fbf5c;
+        --colour-paper: #ffffff;
+
+        /* Typography */
+        --font-display: "Fraunces", "Iowan Old Style", "Apple Garamond", Georgia, serif;
+        --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+        --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+
+        --type-xs: 0.78rem;
+        --type-sm: 0.92rem;
+        --type-base: 1.02rem;
+        --type-lg: 1.18rem;
+        --type-xl: clamp(1.4rem, 1.1rem + 1vw, 1.8rem);
+        --type-2xl: clamp(1.8rem, 1.3rem + 2vw, 2.6rem);
+        --type-3xl: clamp(2.6rem, 1.6rem + 4vw, 4.4rem);
+        --type-mega: clamp(3.6rem, 2rem + 7vw, 7.5rem);
+
+        /* Spacing */
+        --space-1: 0.25rem;
+        --space-2: 0.5rem;
+        --space-3: 0.75rem;
+        --space-4: 1rem;
+        --space-5: 1.5rem;
+        --space-6: 2rem;
+        --space-7: 3rem;
+        --space-8: 4.5rem;
+        --space-9: 6rem;
+
+        /* Layout */
+        --measure: 68ch;
+        --container: 78rem;
+        --radius: 4px;
+        --radius-lg: 10px;
+
+        /* Motion */
+        --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+        --duration: 600ms;
+      }
+
+      /* ---------- RESET & BASE ---------- */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin-block: 0;
+        margin-inline: 0;
+        font-family: var(--font-body);
+        font-size: var(--type-base);
+        line-height: 1.6;
+        color: var(--colour-ink);
+        background: var(--colour-cream);
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+      }
+
+      img,
+      svg {
+        max-inline-size: 100%;
+        display: block;
+      }
+
+      a {
+        color: var(--colour-orange-deep);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+        transition: color 200ms var(--ease-out);
+      }
+
+      a:hover,
+      a:focus-visible {
+        color: var(--colour-orange);
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--colour-orange);
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+
+      ::selection {
+        background: var(--colour-orange);
+        color: var(--colour-paper);
+      }
+
+      /* ---------- TYPOGRAPHY ---------- */
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        line-height: 1.05;
+        margin-block: 0;
+        margin-inline: 0;
+        letter-spacing: -0.01em;
+        font-variation-settings:
+          "opsz" 96,
+          "SOFT" 30,
+          "WONK" 0;
+      }
+
+      h2 {
+        font-size: var(--type-2xl);
+        font-style: italic;
+        font-weight: 400;
+      }
+
+      h3 {
+        font-size: var(--type-xl);
+        font-weight: 500;
+      }
+
+      h4 {
+        font-size: var(--type-lg);
+        font-weight: 500;
+        font-family: var(--font-body);
+        letter-spacing: -0.005em;
+      }
+
+      p {
+        margin-block: 0 1em;
+        margin-inline: 0;
+        max-inline-size: var(--measure);
+      }
+
+      p:last-child {
+        margin-block-end: 0;
+      }
+
+      em {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-variation-settings:
+          "opsz" 14,
+          "SOFT" 50,
+          "WONK" 1;
+      }
+
+      .mono {
+        font-family: var(--font-mono);
+        font-size: 0.88em;
+        letter-spacing: -0.01em;
+      }
+
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: var(--type-xs);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--colour-orange);
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6em;
+      }
+
+      .eyebrow::before {
+        content: "";
+        inline-size: 1.6rem;
+        block-size: 1px;
+        background: currentColor;
+        transform-origin: 0% center;
+        transform: scaleX(0);
+        transition: transform 700ms var(--ease-out) 150ms;
+      }
+
+      .reveal.is-visible .eyebrow::before,
+      .is-visible .eyebrow::before {
+        transform: scaleX(1);
+      }
+
+      /* ---------- LAYOUT ---------- */
+      .shell {
+        max-inline-size: var(--container);
+        margin-inline: auto;
+        padding-inline: clamp(1.25rem, 4vw, 3rem);
+      }
+
+      section {
+        padding-block: var(--space-8);
+        border-block-start: 1px solid var(--colour-rule);
+      }
+
+      section:first-of-type {
+        border-block-start: 0;
+      }
+
+      .section-head {
+        display: grid;
+        gap: var(--space-3);
+        margin-block-end: var(--space-7);
+      }
+
+      /* ---------- HERO ---------- */
+      .hero {
+        position: relative;
+        background: var(--colour-ink);
+        color: var(--colour-cream);
+        overflow: hidden;
+        isolation: isolate;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          radial-gradient(circle at 80% 20%, rgba(222, 88, 51, 0.18), transparent 50%),
+          radial-gradient(circle at 20% 80%, rgba(111, 191, 92, 0.08), transparent 50%);
+        z-index: -1;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: repeating-linear-gradient(
+          45deg,
+          transparent 0 14px,
+          rgba(255, 255, 255, 0.012) 14px 15px
+        );
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .hero-strip {
+        background: var(--colour-orange);
+        block-size: 8px;
+      }
+
+      .hero-inner {
+        padding-block: clamp(3rem, 8vw, 6rem);
+        display: grid;
+        gap: var(--space-6);
+      }
+
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3) var(--space-5);
+        align-items: center;
+        color: var(--colour-cream);
+        opacity: 0.8;
+        animation: hero-rise 700ms var(--ease-out) 0ms both;
+      }
+
+      .hero-meta .mono {
+        color: var(--colour-orange);
+        opacity: 1;
+      }
+
+      .hero-name {
+        font-family: var(--font-display);
+        font-weight: 300;
+        font-size: var(--type-mega);
+        line-height: 0.92;
+        letter-spacing: -0.04em;
+        margin-block: 0;
+        margin-inline: 0;
+        font-variation-settings:
+          "opsz" 144,
+          "SOFT" 20,
+          "WONK" 0;
+        animation: hero-rise 900ms var(--ease-out) 100ms both;
+      }
+
+      .hero-name em {
+        font-style: italic;
+        font-weight: 300;
+        color: var(--colour-orange);
+        font-variation-settings:
+          "opsz" 144,
+          "SOFT" 60,
+          "WONK" 1;
+      }
+
+      .hero-tagline {
+        font-family: var(--font-mono);
+        font-size: var(--type-sm);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--colour-cream);
+        opacity: 0.7;
+        animation: hero-rise 700ms var(--ease-out) 350ms both;
+      }
+
+      .hero-role {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: var(--type-xl);
+        color: var(--colour-cream);
+        max-inline-size: 32ch;
+        animation: hero-rise 700ms var(--ease-out) 500ms both;
+      }
+
+      .hero-role::before {
+        content: "→";
+        color: var(--colour-orange);
+        margin-inline-end: 0.5em;
+      }
+
+      .hero-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2) var(--space-5);
+        list-style: none;
+        padding-block: 0;
+        padding-inline: 0;
+        margin-block: 0;
+        margin-inline: 0;
+        animation: hero-rise 700ms var(--ease-out) 650ms both;
+      }
+
+      .hero-links a {
+        color: var(--colour-cream);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: var(--type-sm);
+        padding-block-end: 4px;
+        background-image:
+          linear-gradient(var(--colour-orange), var(--colour-orange)),
+          linear-gradient(rgba(250, 246, 240, 0.3), rgba(250, 246, 240, 0.3));
+        background-size:
+          0% 1px,
+          100% 1px;
+        background-position:
+          0 100%,
+          0 100%;
+        background-repeat: no-repeat;
+        transition:
+          color 250ms var(--ease-out),
+          background-size 400ms var(--ease-out);
+      }
+
+      .hero-links a:hover,
+      .hero-links a:focus-visible {
+        color: var(--colour-orange);
+        background-size:
+          100% 1px,
+          100% 1px;
+      }
+
+      .duck {
+        display: inline-block;
+        font-size: 1.2em;
+        transform-origin: 50% 90%;
+        transform: translateY(2px);
+      }
+
+      .reveal.is-visible .duck {
+        animation: duck-waddle 900ms var(--ease-out) 400ms 1;
+      }
+
+      @keyframes duck-waddle {
+        0% {
+          transform: translateY(2px) rotate(0deg);
+        }
+        20% {
+          transform: translateY(0) rotate(-10deg);
+        }
+        45% {
+          transform: translateY(2px) rotate(0deg);
+        }
+        70% {
+          transform: translateY(0) rotate(10deg);
+        }
+        100% {
+          transform: translateY(2px) rotate(0deg);
+        }
+      }
+
+      /* ---------- GREETING / LETTER ---------- */
+      .letter {
+        background: var(--colour-paper);
+      }
+
+      .letter-grid {
+        display: grid;
+        gap: var(--space-8);
+      }
+
+      .letter-block {
+        display: grid;
+        gap: var(--space-4);
+        max-inline-size: var(--measure);
+      }
+
+      .letter-block h2 {
+        margin-block-end: var(--space-2);
+      }
+
+      .letter-greeting {
+        font-family: var(--font-display);
+        font-size: var(--type-xl);
+        font-weight: 400;
+        font-style: italic;
+        color: var(--colour-orange);
+        margin-block-end: var(--space-3);
+      }
+
+      /* Pull quote — DDG-style cream card with orange rule */
+      .pull {
+        position: relative;
+        background: var(--colour-cream-warm);
+        padding-block: var(--space-5);
+        padding-inline: calc(var(--space-6) + 4px) var(--space-6);
+        margin-block: var(--space-5);
+        max-inline-size: 56ch;
+        border-start-start-radius: 0;
+        border-start-end-radius: var(--radius-lg);
+        border-end-end-radius: var(--radius-lg);
+        border-end-start-radius: 0;
+      }
+
+      .pull::before {
+        content: "";
+        position: absolute;
+        inset-block: 0;
+        inset-inline-start: 0;
+        inline-size: 4px;
+        background: var(--colour-orange);
+        transform-origin: center 0%;
+        transform: scaleY(0);
+        transition: transform 800ms var(--ease-out) 200ms;
+      }
+
+      .reveal.is-visible .pull::before {
+        transform: scaleY(1);
+      }
+
+      .pull p {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: var(--type-lg);
+        font-weight: 400;
+        line-height: 1.35;
+        color: var(--colour-ink);
+        margin-block: 0;
+        margin-inline: 0;
+      }
+
+      .pull cite {
+        display: block;
+        margin-block-start: var(--space-3);
+        font-family: var(--font-mono);
+        font-style: normal;
+        font-size: var(--type-xs);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--colour-mute);
+      }
+
+      .punchline {
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-style: italic;
+        font-size: var(--type-xl);
+        color: var(--colour-orange);
+        margin-block-start: var(--space-2);
+      }
+
+      /* ---------- EXPERIENCE ---------- */
+      .experience-list {
+        display: grid;
+        gap: var(--space-7);
+      }
+
+      .role {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-4);
+        padding-block-end: var(--space-7);
+        border-block-end: 1px dashed var(--colour-rule);
+      }
+
+      .role:last-child {
+        border-block-end: 0;
+        padding-block-end: 0;
+      }
+
+      @media (min-width: 56rem) {
+        .role {
+          grid-template-columns: 14rem minmax(0, 1fr);
+          gap: var(--space-7);
+        }
+      }
+
+      .role-meta {
+        font-family: var(--font-mono);
+        font-size: var(--type-sm);
+        color: var(--colour-mute);
+        line-height: 1.5;
+      }
+
+      .role-meta strong {
+        display: block;
+        font-family: var(--font-display);
+        font-style: italic;
+        font-weight: 500;
+        font-size: var(--type-lg);
+        color: var(--colour-ink);
+        font-variation-settings:
+          "opsz" 36,
+          "SOFT" 40,
+          "WONK" 0;
+        margin-block-end: var(--space-1);
+      }
+
+      .role-meta .role-date {
+        color: var(--colour-orange);
+      }
+
+      .role-body h3 {
+        margin-block-end: var(--space-3);
+      }
+
+      .role-body h4 {
+        margin-block: var(--space-5) var(--space-2);
+        font-family: var(--font-mono);
+        font-size: var(--type-sm);
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--colour-orange);
+      }
+
+      .role-body ul {
+        list-style: none;
+        padding-block: 0;
+        padding-inline: 0;
+        margin-block: 0;
+        margin-inline: 0;
+        display: grid;
+        gap: var(--space-3);
+      }
+
+      .role-body li {
+        position: relative;
+        padding-inline-start: 1.5rem;
+        max-inline-size: var(--measure);
+      }
+
+      .role-body li::before {
+        content: "";
+        position: absolute;
+        inset-inline-start: 0;
+        inset-block-start: 0.65em;
+        inline-size: 0.5rem;
+        block-size: 1px;
+        background: var(--colour-orange);
+      }
+
+      .role-body li strong {
+        font-weight: 600;
+        color: var(--colour-ink);
+      }
+
+      /* ---------- PROJECTS ---------- */
+      .projects {
+        background: var(--colour-paper);
+      }
+
+      .project-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+        gap: var(--space-5);
+      }
+
+      .project {
+        background: var(--colour-cream);
+        border: 1px solid var(--colour-rule);
+        border-radius: var(--radius-lg);
+        padding-block: var(--space-5) var(--space-6);
+        padding-inline: var(--space-5);
+        display: grid;
+        gap: var(--space-3);
+        align-content: start;
+        transition:
+          transform 250ms var(--ease-out),
+          border-color 250ms var(--ease-out);
+        position: relative;
+      }
+
+      .project:hover {
+        transform: translateY(-2px);
+        border-color: var(--colour-orange);
+      }
+
+      /* Route keyboard focus from the inner link onto the whole card */
+      .project:has(.project-link:focus-visible) {
+        outline: 2px solid var(--colour-orange);
+        outline-offset: 3px;
+      }
+
+      .project-name {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-weight: 500;
+        font-size: var(--type-xl);
+        color: var(--colour-ink);
+        margin-block: 0;
+        margin-inline: 0;
+        font-variation-settings:
+          "opsz" 36,
+          "SOFT" 50,
+          "WONK" 1;
+        transition:
+          font-variation-settings 400ms var(--ease-out),
+          color 250ms var(--ease-out);
+      }
+
+      .project:hover .project-name {
+        color: var(--colour-orange-deep);
+        font-variation-settings:
+          "opsz" 36,
+          "SOFT" 100,
+          "WONK" 1;
+      }
+
+      .project-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+        margin-block-start: var(--space-2);
+      }
+
+      .project-stack span {
+        font-family: var(--font-mono);
+        font-size: var(--type-xs);
+        background: var(--colour-orange-soft);
+        color: var(--colour-orange-deep);
+        padding-block: 0.15rem;
+        padding-inline: 0.5rem;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+
+      .project-link {
+        font-family: var(--font-mono);
+        font-size: var(--type-xs);
+        color: var(--colour-orange-deep);
+        text-decoration: none;
+        margin-block-start: var(--space-3);
+        overflow-wrap: anywhere;
+        line-height: 1.6;
+      }
+
+      /* Expand the link's hit area to cover the entire card.
+         The pseudo is positioned relative to the .project ancestor (position: relative). */
+      .project-link::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: var(--radius-lg);
+      }
+
+      .project-link::after {
+        content: "\00a0→";
+        display: inline-block;
+        font-size: 1.4em;
+        vertical-align: -0.1em;
+        transition: transform 250ms var(--ease-out);
+      }
+
+      .project:hover .project-link::after {
+        transform: translateX(4px);
+      }
+
+      .project-link:hover {
+        color: var(--colour-orange);
+      }
+
+      /* Focus indicator lives on the card now, via :has() above */
+      .project-link:focus-visible {
+        outline: none;
+      }
+
+      /* ---------- SKILLS ---------- */
+      .skills-grid {
+        list-style: none;
+        padding-block: 0;
+        padding-inline: 0;
+        margin-block: 0;
+        margin-inline: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));
+        gap: var(--space-2);
+      }
+
+      .skill {
+        font-family: var(--font-mono);
+        font-size: var(--type-sm);
+        background: var(--colour-paper);
+        border: 1px solid var(--colour-rule);
+        padding-block: var(--space-2);
+        padding-inline: var(--space-3);
+        border-radius: var(--radius);
+      }
+
+      .skill-group {
+        display: grid;
+        gap: var(--space-3);
+      }
+
+      .skill-group + .skill-group {
+        margin-block-start: var(--space-6);
+      }
+
+      .skill-group-label {
+        font-family: var(--font-mono);
+        font-size: var(--type-xs);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--colour-orange);
+        font-weight: 500;
+      }
+
+      .general-tools {
+        margin-block-start: var(--space-6);
+        font-family: var(--font-mono);
+        font-size: var(--type-sm);
+        color: var(--colour-mute);
+        line-height: 1.7;
+        max-inline-size: var(--measure);
+      }
+
+      .general-tools strong {
+        display: block;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        font-size: var(--type-xs);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--colour-orange);
+        margin-block-end: var(--space-2);
+      }
+
+      /* ---------- TESTIMONIALS ---------- */
+      .testimonials {
+        background: var(--colour-ink);
+        color: var(--colour-cream);
+      }
+
+      .testimonials .eyebrow {
+        color: var(--colour-orange);
+      }
+
+      .testimonials h2 {
+        color: var(--colour-cream);
+      }
+
+      .testimonials h2 em {
+        color: var(--colour-orange);
+      }
+
+      .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+        gap: var(--space-5);
+      }
+
+      .testimonial {
+        background: rgba(250, 246, 240, 0.04);
+        border: 1px solid rgba(250, 246, 240, 0.1);
+        border-radius: var(--radius-lg);
+        padding-block: var(--space-6);
+        padding-inline: var(--space-6);
+        display: grid;
+        gap: var(--space-4);
+        position: relative;
+      }
+
+      .testimonial blockquote {
+        margin-block: 0;
+        margin-inline: 0;
+        font-family: var(--font-display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: var(--type-base);
+        line-height: 1.55;
+        color: var(--colour-cream);
+        font-variation-settings:
+          "opsz" 18,
+          "SOFT" 50,
+          "WONK" 0;
+      }
+
+      .testimonial footer {
+        font-family: var(--font-mono);
+        font-size: var(--type-xs);
+        letter-spacing: 0.05em;
+        color: var(--colour-cream);
+        opacity: 0.75;
+        text-transform: uppercase;
+      }
+
+      .testimonial footer strong {
+        display: block;
+        color: var(--colour-orange);
+        font-weight: 500;
+        margin-block-end: 2px;
+      }
+
+      /* ---------- FOOTER ---------- */
+      .end {
+        background: var(--colour-orange);
+        color: var(--colour-paper);
+        padding-block: var(--space-7);
+        text-align: center;
+        border-block-start: 0;
+      }
+
+      .end p {
+        margin-block: 0;
+        margin-inline: auto;
+        max-inline-size: 40ch;
+        font-family: var(--font-display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: var(--type-xl);
+      }
+
+      .end .signature {
+        margin-block-start: var(--space-4);
+        font-family: var(--font-mono);
+        font-size: var(--type-xs);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-style: normal;
+        opacity: 0.85;
+      }
+
+      /* ---------- MOTION ---------- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(12px);
+        transition:
+          opacity 700ms var(--ease-out),
+          transform 700ms var(--ease-out);
+      }
+
+      .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      @keyframes hero-rise {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+        .eyebrow::before {
+          transform: scaleX(1);
+        }
+        .pull::before {
+          transform: scaleY(1);
+        }
+        .duck {
+          transform: translateY(2px);
+        }
+      }
+
+      /* ---------- VISUALLY HIDDEN ---------- */
+      .visually-hidden {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding-block: 0;
+        padding-inline: 0;
+        margin-block: -1px;
+        margin-inline: -1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      /* ---------- GAME TEASER ---------- */
+      .game-teaser {
+        background: transparent;
+        border: 0;
+        padding-block: 0;
+        padding-inline: 0;
+        margin-block: 0 var(--space-3);
+        margin-inline: 0;
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-3);
+        align-self: start;
+        transition: transform 250ms var(--ease-out);
+      }
+
+      .game-teaser:hover,
+      .game-teaser:focus-visible {
+        transform: translateY(-1px);
+      }
+
+      .teaser-mini {
+        display: grid;
+        grid-template-columns: repeat(3, 1.2ch);
+        grid-template-rows: repeat(3, 1.2ch);
+        gap: 2px;
+        padding-block: 5px;
+        padding-inline: 5px;
+        background: var(--colour-cream);
+        border: 1px solid var(--colour-rule);
+        border-radius: 4px;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        line-height: 1;
+        color: var(--colour-mute);
+        transition:
+          border-color 200ms var(--ease-out),
+          background 200ms var(--ease-out);
+      }
+
+      .teaser-mini > span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .game-teaser:hover .teaser-mini,
+      .game-teaser:focus-visible .teaser-mini {
+        border-color: var(--colour-orange);
+        background: var(--colour-orange-soft);
+      }
+
+      .teaser-arrow {
+        inline-size: 70px;
+        block-size: 28px;
+        color: var(--colour-orange);
+        flex-shrink: 0;
+      }
+
+      .teaser-arrow path {
+        stroke-dasharray: 220;
+        stroke-dashoffset: 220;
+      }
+
+      .is-visible .teaser-arrow-shaft {
+        animation: draw-line 750ms var(--ease-out) 800ms forwards;
+      }
+
+      .is-visible .teaser-arrow-head {
+        animation: draw-line 250ms var(--ease-out) 1500ms forwards;
+      }
+
+      @keyframes draw-line {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      .teaser-text {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: var(--type-base);
+        color: var(--colour-orange-deep);
+        font-variation-settings:
+          "opsz" 14,
+          "SOFT" 100,
+          "WONK" 1;
+        transition: color 200ms var(--ease-out);
+      }
+
+      .game-teaser:hover .teaser-text,
+      .game-teaser:focus-visible .teaser-text {
+        color: var(--colour-orange);
+      }
+
+      /* ---------- GAME DIALOG ---------- */
+      .game-dialog {
+        border: 1px solid var(--colour-rule);
+        border-radius: var(--radius-lg);
+        padding-block: 0;
+        padding-inline: 0;
+        background: var(--colour-paper);
+        color: var(--colour-ink);
+        max-inline-size: min(28rem, calc(100% - 2rem));
+        inline-size: 100%;
+        box-shadow: 0 20px 60px rgba(20, 19, 15, 0.25);
+      }
+
+      .game-dialog::backdrop {
+        background: rgba(20, 19, 15, 0.7);
+        backdrop-filter: blur(3px);
+      }
+
+      .game-dialog[open] {
+        animation: dialog-in 250ms var(--ease-out);
+      }
+
+      @keyframes dialog-in {
+        from {
+          opacity: 0;
+          transform: scale(0.96);
+        }
+      }
+
+      .game-header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: start;
+        gap: var(--space-3);
+        padding-block: var(--space-5) var(--space-4);
+        padding-inline: var(--space-5);
+        border-block-end: 1px solid var(--colour-rule);
+      }
+
+      .game-header h2 {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: var(--type-xl);
+        font-weight: 500;
+        margin-block: 0;
+        margin-inline: 0;
+        font-variation-settings:
+          "opsz" 24,
+          "SOFT" 80,
+          "WONK" 1;
+      }
+
+      .game-subtitle {
+        font-family: var(--font-mono);
+        font-size: var(--type-xs);
+        color: var(--colour-mute);
+        margin-block: var(--space-2) 0;
+        margin-inline: 0;
+      }
+
+      .game-close {
+        background: transparent;
+        border: 0;
+        font-size: 1.6rem;
+        line-height: 1;
+        cursor: pointer;
+        color: var(--colour-mute);
+        padding-block: 0.25rem;
+        padding-inline: 0.6rem;
+        border-radius: 4px;
+        transition:
+          color 150ms var(--ease-out),
+          background 150ms var(--ease-out);
+      }
+
+      .game-close:hover,
+      .game-close:focus-visible {
+        color: var(--colour-ink);
+        background: var(--colour-cream);
+      }
+
+      .game-status {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: var(--type-lg);
+        font-weight: 400;
+        text-align: center;
+        margin-block: 0;
+        margin-inline: 0;
+        padding-block: var(--space-4) var(--space-3);
+        padding-inline: var(--space-5);
+        color: var(--colour-orange-deep);
+        font-variation-settings:
+          "opsz" 18,
+          "SOFT" 50,
+          "WONK" 0;
+      }
+
+      .game-board {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 4px;
+        background: var(--colour-rule);
+        padding-block: 4px;
+        padding-inline: 4px;
+        border-radius: 8px;
+        margin-block: 0;
+        margin-inline: var(--space-5);
+        aspect-ratio: 1;
+      }
+
+      .game-cell {
+        background: var(--colour-cream);
+        border: 0;
+        border-radius: 4px;
+        font-size: clamp(2rem, 12vw, 3.2rem);
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-family: inherit;
+        color: inherit;
+        padding-block: 0;
+        padding-inline: 0;
+        transition: background 150ms var(--ease-out);
+      }
+
+      .game-cell:not(:disabled):hover,
+      .game-cell:not(:disabled):focus-visible {
+        background: var(--colour-orange-soft);
+      }
+
+      .game-cell:disabled {
+        cursor: default;
+      }
+
+      .game-cell:not(:empty) {
+        animation: cell-pop 280ms var(--ease-out);
+      }
+
+      @keyframes cell-pop {
+        from {
+          transform: scale(0.4);
+          opacity: 0;
+        }
+      }
+
+      .game-cell--winning {
+        background: var(--colour-orange-soft);
+        animation: cell-win 700ms ease-in-out infinite alternate;
+      }
+
+      @keyframes cell-win {
+        to {
+          background: var(--colour-orange);
+        }
+      }
+
+      .game-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+        padding-block: var(--space-5);
+        padding-inline: var(--space-5);
+      }
+
+      .game-score {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+        margin-block: 0;
+        margin-inline: 0;
+        font-family: var(--font-mono);
+        font-size: var(--type-xs);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--colour-mute);
+      }
+
+      .game-score strong {
+        color: var(--colour-orange-deep);
+        font-weight: 500;
+      }
+
+      .game-reset {
+        font-family: var(--font-mono);
+        font-size: var(--type-sm);
+        background: var(--colour-orange);
+        color: var(--colour-paper);
+        border: 0;
+        padding-block: var(--space-3);
+        padding-inline: var(--space-5);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 200ms var(--ease-out);
+      }
+
+      .game-reset:hover,
+      .game-reset:focus-visible {
+        background: var(--colour-orange-deep);
+      }
+
+      /* ---------- PRINT ---------- */
+      @media print {
+        .game-teaser,
+        .game-dialog {
+          display: none;
+        }
+        :root {
+          --colour-cream: #fff;
+          --colour-paper: #fff;
+          --colour-ink: #000;
+        }
+        body {
+          background: #fff;
+          font-size: 10pt;
+          line-height: 1.4;
+        }
+        .hero {
+          background: #fff;
+          color: #000;
+          border-block-end: 3px solid var(--colour-orange);
+        }
+        .hero-name,
+        .hero-tagline,
+        .hero-role,
+        .hero-links a,
+        .hero-meta {
+          color: #000;
+        }
+        .hero::before,
+        .hero::after,
+        .hero-strip {
+          display: none;
+        }
+        .testimonials {
+          background: #fff;
+          color: #000;
+        }
+        .testimonials h2,
+        .testimonial blockquote,
+        .testimonial footer {
+          color: #000;
+        }
+        .testimonial {
+          border: 1px solid #999;
+          background: #fafafa;
+          break-inside: avoid;
+        }
+        section {
+          padding-block: 1.5rem;
+          break-inside: avoid;
+        }
+        a {
+          color: #000;
+          text-decoration: underline;
+        }
+        .end {
+          background: #fff;
+          color: #000;
+          border-block-start: 3px solid var(--colour-orange);
+        }
+        .end p {
+          color: #000;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <header class="hero" role="banner">
+      <div class="hero-strip" aria-hidden="true"></div>
+      <div class="shell hero-inner">
+        <div class="hero-meta">
+          <span class="mono">Application · Senior Frontend Engineer, React/TypeScript</span>
+          <span class="mono">DuckDuckGo · 2026</span>
+        </div>
+
+        <h1 class="hero-name">Schalk <em>Neethling</em></h1>
+
+        <p class="hero-tagline">Open&nbsp;Source · Open&nbsp;Web · Open&nbsp;Access</p>
+
+        <p class="hero-role">
+          Seventeen years of building for the open web. Web-platform-first. Accessibility as a
+          first-class concern. Currently leading AI integration at Factorial.
+        </p>
+
+        <nav aria-label="Contact and links">
+          <ul class="hero-links">
+            <li><a href="https://schalkneethling.com" rel="noopener">schalkneethling.com</a></li>
+            <li>
+              <a href="https://github.com/schalkneethling" rel="noopener"
+                >github.com/schalkneethling</a
+              >
+            </li>
+            <li><span>Remote · Johannesburg, South Africa</span></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="letter">
+      <section class="shell letter-grid" aria-labelledby="letter-heading">
+        <h2
+          id="letter-heading"
+          class="visually-hidden"
+          style="
+            position: absolute;
+            clip-path: inset(50%);
+            inline-size: 1px;
+            block-size: 1px;
+            overflow: hidden;
+          "
+        >
+          Cover letter
+        </h2>
+
+        <article class="letter-block reveal">
+          <button class="game-teaser" type="button" aria-haspopup="dialog" aria-controls="ticgame">
+            <span class="teaser-mini" aria-hidden="true">
+              <span>×</span><span>○</span><span>×</span> <span>○</span><span>×</span><span>○</span>
+              <span>×</span><span>○</span><span>×</span>
+            </span>
+            <svg class="teaser-arrow" viewBox="0 0 80 32" aria-hidden="true" focusable="false">
+              <path
+                class="teaser-arrow-shaft"
+                d="M 72 6 C 56 10, 38 24, 22 19"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+              <path
+                class="teaser-arrow-head"
+                d="M 22 19 L 30 13 M 22 19 L 28 26"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span class="teaser-text">remember the take-home? give it a go.</span>
+          </button>
+          <p class="letter-greeting">
+            Hi there, Duckers (Ducks, DuckDuckGoers??) <span class="duck">🦆</span>
+          </p>
+          <p>
+            My name is Schalk Neethling, and I am applying for the role of
+            <strong>Senior Frontend Engineer, React/TypeScript</strong> at DuckDuckGo.
+          </p>
+        </article>
+
+        <article class="letter-block reveal">
+          <p class="eyebrow">Why me?</p>
+          <h2>The projects on your team page <em>are the projects I have done before.</em></h2>
+          <p>
+            When I read about the work I might be doing — Instant Answers (tools!! — I love building
+            tools) and in-app onboarding — I knew this position was for me.
+          </p>
+          <p>
+            At Mozilla, I led the frontend engineering for the Firefox onboarding experiment,
+            architected as a WebExtension so that we could ship and A/B test new onboarding flows
+            independently of the browser release cycle. Together with the growth and UX teams, we
+            designed a gamified five-day journey, built telemetry rigorous enough for statistical
+            decisions, and deployed via Funnelcake to cohorts of forty-thousand-plus users.
+          </p>
+          <p>
+            The experiment achieved an eighty per cent OKR score and was permanently integrated into
+            Firefox for users worldwide. That project demanded everything this role asks for:
+            pragmatic, performant React running consistently across browsers; cross-team
+            collaboration with growth, UX, browser engineering, and release management; success
+            criteria defined upfront and validated against telemetry; and an architecture that
+            respected user privacy by design.
+          </p>
+          <p>
+            Beyond Firefox onboarding, I led the frontend transition of MDN Web Docs from a
+            Django-based wiki to a React-rendered platform (Yari) — large-scale architecture work
+            for a developer audience of millions, where semantic HTML, accessibility, and
+            performance were treated as first-class concerns throughout.
+          </p>
+        </article>
+
+        <article class="letter-block reveal">
+          <p class="eyebrow">What I bring that is harder to find</p>
+          <h2><em>Web-platform-first,</em> with React used deliberately.</h2>
+          <p>
+            I am web-platform-first. Seventeen years of HTML, CSS, and JavaScript experience means I
+            reach for the native primitive before the framework abstraction. When writing React, I
+            use it deliberately: to add what is genuinely useful, to fill in the gaps the platform
+            does not yet cover, and to bridge browsers that are still catching up.
+          </p>
+          <p>
+            This results in code that is considered, performant, and easy to maintain and
+            understand.
+          </p>
+          <p>
+            At Factorial, I lead AI integration across our engineering workflows and translate that
+            practice into our client work, working daily with Claude Code, Cursor, Codex, MCP, and
+            Agent Skills in a spec- and test-driven approach.
+          </p>
+          <p>
+            I am also endlessly curious. As a result, I am building, open sourcing, and releasing a
+            corpus of projects (more on this later) aimed at improving developer workflows and tight
+            feedback loops, to get the best out of AI models and coding agent harnesses.
+          </p>
+          <p>
+            I was one of the technical reviewers for the latest editions of the O'Reilly
+            <em>JavaScript Definitive Guide</em>, <em>CSS Definitive Guide</em>,
+            <em>Web API Cookbook</em>, and <em>PHP, MySQL, and JavaScript</em>. This work has
+            sharpened both my editorial eye and my standards depth.
+          </p>
+          <p>
+            I believe this new age of agentic engineering should push us toward better, more
+            accessible, more performant code — and out of our comfort zones. So I have undertaken a
+            large side project, partly for the challenge and partly because it lets me explore
+            something that has fascinated me for years:
+            <em>how does a browser work internally?</em> To answer that, I am building an HTML
+            rendering engine in TypeScript. I know, wild. But that is what this new world of
+            engineering opens us up to. To dream big, and then realise those dreams.
+          </p>
+        </article>
+
+        <article class="letter-block reveal">
+          <p class="eyebrow">Why DuckDuckGo?</p>
+          <h2><em>Simple really.</em> Your personal data should be nobody's business.</h2>
+          <div class="pull">
+            <p>That sentence has lived rent-free in my head since I first heard it.</p>
+          </div>
+          <p>
+            I have spent my career advocating for an open, accessible, standards-respecting web, and
+            DuckDuckGo is one of the few large-scale consumer products genuinely fighting that fight
+            while also championing user privacy.
+          </p>
+          <p>
+            The chance to write code that materially protects millions of people is rare, and it is
+            exactly the kind of meaningful work I want my next chapter to be about.
+          </p>
+          <p class="punchline">
+            It is about more than code. It is about being part of something meaningful. ✌️
+          </p>
+        </article>
+      </section>
+
+      <section aria-labelledby="experience-heading">
+        <div class="shell">
+          <header class="section-head reveal">
+            <p class="eyebrow">Experience</p>
+            <h2 id="experience-heading">Seventeen years <em>shipping for the open web.</em></h2>
+          </header>
+
+          <div class="experience-list">
+            <article class="role reveal">
+              <div class="role-meta">
+                <strong>Factorial GmbH</strong>
+                Hamburg, Germany<br />
+                (remote from South Africa)<br />
+                <span class="role-date">May 2024 — Present</span>
+              </div>
+              <div class="role-body">
+                <h3>Senior Frontend &amp; Agentic Engineer</h3>
+                <p>
+                  Took on team-lead responsibilities for a major client project within two months of
+                  joining. Balance frontend engineering with product requirements work, client
+                  communication, and collaboration with external UX and design agencies — providing
+                  critical feedback on feasibility, performance, and accessibility.
+                </p>
+                <h4>Selected projects</h4>
+                <ul>
+                  <li>
+                    <strong>Finstral and Beck component libraries.</strong> Drupal-based component
+                    libraries using Twig, web components, and CSS, developed with Miyagi.
+                  </li>
+                  <li>
+                    <strong>Algolia integrations.</strong> Built a store locator combining Algolia
+                    geosearch with Leaflet, OpenStreetMap, and Geoapify for road-distance
+                    calculations, and a newsroom homepage powered by Algolia InstantSearch. Designed
+                    the Algolia index schema.
+                  </li>
+                  <li>
+                    <strong>CI/CD modernisation.</strong> Improved build process and pipelines
+                    through custom Node.js solutions on GitHub Actions.
+                  </li>
+                  <li>
+                    <strong>BITV accessibility compliance.</strong> Recognised internally as the
+                    accessibility specialist; led the project to prepare the company website for
+                    BITV compliance.
+                  </li>
+                  <li>
+                    <strong>AI-augmented engineering.</strong> Leading the team's adoption of Claude
+                    Code, Cursor, MCP, and Agent Skills in a spec- and test-driven workflow.
+                  </li>
+                  <li>
+                    <strong>Incident management.</strong> Entrusted with incident management
+                    responsibilities across three business-critical tenants.
+                  </li>
+                  <li>
+                    <strong>Mentorship.</strong> Mentored mid-level engineers, helping them develop
+                    independent JavaScript capabilities.
+                  </li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="role reveal">
+              <div class="role-meta">
+                <strong>Mozilla</strong>
+                San Francisco · Remote<br />
+                <span class="role-date">2011 — 2023 (12 years)</span><br />
+                Frontend Engineer<br />
+                → Growth Engineering Lead<br />
+                → Staff Community Manager
+              </div>
+              <div class="role-body">
+                <h3>Mozilla &amp; MDN Web Docs</h3>
+
+                <h4>Growth Engineering &amp; Experimentation · 2016 — 2017</h4>
+                <p>
+                  Led frontend development for the Firefox onboarding system, used by millions of
+                  users globally.
+                </p>
+                <ul>
+                  <li>
+                    Architected a <strong>WebExtension-based onboarding system</strong> enabling
+                    rapid A/B testing between browser releases.
+                  </li>
+                  <li>
+                    Designed multi-step personalised onboarding journeys with telemetry
+                    instrumentation, backend API integration, and conversion tracking.
+                  </li>
+                  <li>
+                    Deployed experiments to <strong>40,000+ user cohorts via Funnelcake</strong>;
+                    system achieved ~80% OKR success and became the default Firefox onboarding
+                    experience.
+                  </li>
+                  <li>
+                    Built a <strong>privacy-first analytics library</strong> with Do Not Track
+                    support.
+                  </li>
+                </ul>
+
+                <h4>MDN Web Docs &amp; Platform Engineering · 2011 — 2023</h4>
+                <p>
+                  Lead frontend engineer for MDN Web Docs — the definitive web standards reference,
+                  serving tens of millions of developers.
+                </p>
+                <ul>
+                  <li>
+                    Built interactive code examples and maintained collaborative relationships with
+                    Mozilla's global contributor community.
+                  </li>
+                  <li>
+                    Core contributor to the full rewrite of MDN from a Django-powered wiki (Kuma) to
+                    a modern Node.js-based platform with React as the frontend layer, GitHub-based
+                    content workflows, and the <strong>Yari static site generator</strong> — one of
+                    the most significant overhauls in MDN's history.
+                  </li>
+                  <li>
+                    Contributed to Mozilla Crash Stats, Plugincheck, and internal Design System
+                    initiatives.
+                  </li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="projects" aria-labelledby="projects-heading">
+        <div class="shell">
+          <header class="section-head reveal">
+            <p class="eyebrow">Side projects</p>
+            <h2 id="projects-heading">A corpus of work, <em>built in the open.</em></h2>
+            <p>
+              Open source projects and active work outside of employment. They illustrate where I
+              invest time when I am not on the clock — web platform depth, developer experience, and
+              the future of how we build for the web.
+            </p>
+          </header>
+
+          <div class="project-grid">
+            <article class="project reveal">
+              <h3 class="project-name">My website</h3>
+              <p>Where I share everything I learn, think about, and am experimenting with.</p>
+              <a class="project-link" href="https://schalkneethling.com" rel="noopener"
+                >schalkneethling.com</a
+              >
+            </article>
+
+            <article class="project reveal">
+              <h3 class="project-name">Skills Autoresearch</h3>
+              <p>
+                A harness that evaluates a seed skill against project fixtures, asks a researcher
+                model to improve the skill, then reruns evals against the candidate. Currently
+                validating whether Flue's agent harness primitives help build a reliable, auditable
+                skills autoresearch loop. Real, tangible results so far.
+              </p>
+              <div class="project-stack" aria-label="Tech stack">
+                <span>Flue</span>
+                <span>Evals</span>
+                <span>Agent Skills</span>
+              </div>
+              <a
+                class="project-link"
+                href="https://github.com/schalkneethling/skills-autoresearch-flue"
+                rel="noopener"
+                >github.com/schalkneethling/skills-autoresearch-flue</a
+              >
+            </article>
+
+            <article class="project reveal">
+              <h3 class="project-name">CSS Property Type Validator</h3>
+              <p>
+                Validates CSS custom property registrations declared with
+                <code class="mono">@property</code>, then checks whether registered custom
+                properties are used compatibly through <code class="mono">var()</code>. Catches
+                mistakes in CI such as a colour token being used for
+                <code class="mono">inline-size</code>, or a length token being assigned an invalid
+                value.
+              </p>
+              <div class="project-stack" aria-label="Tech stack">
+                <span>css-tree</span>
+                <span>@property</span>
+                <span>Design tokens</span>
+              </div>
+              <a
+                class="project-link"
+                href="https://github.com/schalkneethling/css-property-type-validator"
+                rel="noopener"
+                >github.com/schalkneethling/css-property-type-validator</a
+              >
+            </article>
+
+            <article class="project reveal">
+              <h3 class="project-name">Makerbench</h3>
+              <p>A bookmarking and reading-list tool for makers.</p>
+              <div class="project-stack" aria-label="Tech stack">
+                <span>React 19</span>
+                <span>TypeScript</span>
+                <span>Vite</span>
+                <span>Supabase</span>
+                <span>Drizzle ORM</span>
+                <span>Valibot</span>
+                <span>Vitest</span>
+                <span>Playwright</span>
+              </div>
+              <a
+                class="project-link"
+                href="https://github.com/schalkneethling/makerbench-next"
+                rel="noopener"
+                >github.com/schalkneethling/makerbench-next</a
+              >
+            </article>
+
+            <article class="project reveal">
+              <h3 class="project-name">Project Calavera</h3>
+              <p>
+                Compose and apply modern tooling recipes for web development projects. Focused on
+                project tooling, not application scaffolding — works in an empty folder, or after
+                scaffolding with Vite, Astro, Next.js, Bun, or any other starter.
+              </p>
+              <p>
+                Also my first experiment with <strong>WebMCP</strong>, exposing tools that allow
+                agents to interact with the WebUI to configure and download the JSON config file.
+              </p>
+              <div class="project-stack" aria-label="Tech stack">
+                <span>WebMCP</span>
+                <span>Tooling</span>
+                <span>CLI</span>
+              </div>
+              <a
+                class="project-link"
+                href="https://github.com/schalkneethling/create-project-calavera"
+                rel="noopener"
+                >github.com/schalkneethling/create-project-calavera</a
+              >
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="skills-heading">
+        <div class="shell">
+          <header class="section-head reveal">
+            <p class="eyebrow">Skills</p>
+            <h2 id="skills-heading">The toolkit, <em>roughly.</em></h2>
+          </header>
+
+          <div class="skill-group reveal">
+            <p class="skill-group-label">Core craft</p>
+            <ul class="skills-grid">
+              <li class="skill">HTML</li>
+              <li class="skill">CSS</li>
+              <li class="skill">JavaScript</li>
+              <li class="skill">React</li>
+              <li class="skill">TypeScript</li>
+              <li class="skill">Web Components</li>
+              <li class="skill">Web Accessibility</li>
+              <li class="skill">Responsive design</li>
+              <li class="skill">Cross-browser dev &amp; testing</li>
+              <li class="skill">Technical writing</li>
+            </ul>
+          </div>
+
+          <div class="skill-group reveal">
+            <p class="skill-group-label">Testing &amp; tooling</p>
+            <ul class="skills-grid">
+              <li class="skill">Playwright</li>
+              <li class="skill">Axe Playwright</li>
+              <li class="skill">Vitest</li>
+              <li class="skill">Node.js</li>
+              <li class="skill">Figma · Penpot</li>
+              <li class="skill">Drupal / Twig</li>
+              <li class="skill">Astro</li>
+              <li class="skill">Next.js</li>
+            </ul>
+          </div>
+
+          <div class="skill-group reveal">
+            <p class="skill-group-label">Agentic engineering</p>
+            <ul class="skills-grid">
+              <li class="skill">Claude Code</li>
+              <li class="skill">Claude Design</li>
+              <li class="skill">Cursor</li>
+              <li class="skill">Model Context Protocol</li>
+              <li class="skill">Agent Skills</li>
+              <li class="skill">Spec-driven dev</li>
+              <li class="skill">TDD with AI</li>
+            </ul>
+          </div>
+
+          <div class="skill-group reveal">
+            <p class="skill-group-label">Data</p>
+            <ul class="skills-grid">
+              <li class="skill">Supabase</li>
+              <li class="skill">Turso</li>
+              <li class="skill">PostgreSQL</li>
+              <li class="skill">SQLite</li>
+              <li class="skill">MySQL</li>
+              <li class="skill">MongoDB</li>
+            </ul>
+          </div>
+
+          <div class="general-tools reveal">
+            <strong>General</strong>
+            Vite · Webpack · VS Code · Terminal (Zsh) · Docker · Browser devtools (Chrome, Safari,
+            Firefox) · Axe · GitLab · GitHub · GitHub Actions · Netlify · Netlify Functions · Vercel
+            · Cloudflare Pages · DigitalOcean
+          </div>
+
+          <div class="general-tools reveal">
+            <strong>Soft skills</strong>
+            Lifelong learner · Open Source community management · Agile and Kanban · Frontend team
+            lead · Remote worker since 2011 · Cross-functional and technical teams · Team norms
+          </div>
+        </div>
+      </section>
+
+      <section class="testimonials" aria-labelledby="testimonials-heading">
+        <div class="shell">
+          <header class="section-head reveal">
+            <p class="eyebrow">What others say</p>
+            <h2 id="testimonials-heading">References, <em>in their own words.</em></h2>
+          </header>
+
+          <div class="testimonials-grid">
+            <article class="testimonial reveal">
+              <blockquote>
+                <p>
+                  My team and I manage the GitHub Documentation website, with 8&nbsp;million monthly
+                  users. The accessibility of this website is a top priority. Several times in the
+                  last two years, I have reached out to Schalk for opinions, feedback, and advice.
+                  What is so impressive about Schalk's knowledge of web accessibility is that it is
+                  grounded in real-world problem-solving, knowledgeable expert connections, and
+                  humble reflection and research.
+                </p>
+              </blockquote>
+              <footer>
+                <strong>Peter Bengtsson</strong>
+                Full-stack web dev · GitHub Docs
+              </footer>
+            </article>
+
+            <article class="testimonial reveal">
+              <blockquote>
+                <p>
+                  I worked closely with Schalk on MDN Web Docs. He has extensive expertise in
+                  configuring our repositories so that the health of our project is in a good state
+                  and looks welcoming and well-maintained to the community. His programming
+                  knowledge made it a great help to get feedback on technical content, examples,
+                  guides, and references across multiple web technologies. He cared deeply about the
+                  work we were doing. I would love to have the opportunity to work with Schalk
+                  again.
+                </p>
+              </blockquote>
+              <footer>
+                <strong>Brian Smith</strong>
+                Staff Technical Writer · MDN Web Docs
+              </footer>
+            </article>
+
+            <article class="testimonial reveal">
+              <blockquote>
+                <p>
+                  Schalk demonstrated great technical leadership and community skills when we
+                  brought interactive examples to MDN reference documentation. This project required
+                  building an entire new contribution workflow and a new component with its own
+                  architecture. It was a huge success for both MDN's contributors and readers.
+                  Schalk is truly driven by doing the right thing for the Web and for people.
+                  Thoughtful and kind. I highly recommend working with him.
+                </p>
+              </blockquote>
+              <footer>
+                <strong>Florian Scholz</strong>
+                Director · Open Web Docs
+              </footer>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="end">
+      <div class="shell">
+        <p>It is about more than code. It is about being part of something meaningful.</p>
+        <p class="signature">Schalk Neethling · schalkneethling.com</p>
+      </div>
+    </footer>
+
+    <dialog id="ticgame" class="game-dialog" aria-labelledby="game-title">
+      <header class="game-header">
+        <div>
+          <h2 id="game-title">Naughts and crosses, DDG edition</h2>
+          <p class="game-subtitle">
+            You are <span aria-hidden="true">🦆</span><span class="visually-hidden">duck</span>.
+            Your opponent is <span aria-hidden="true">🦊</span
+            ><span class="visually-hidden">fox</span>.
+          </p>
+        </div>
+        <button type="button" class="game-close" data-game-close aria-label="Close game">×</button>
+      </header>
+
+      <p class="game-status" data-game-status aria-live="polite">Your move, duck.</p>
+
+      <div class="game-board" aria-label="Tic-tac-toe board">
+        <button type="button" class="game-cell" data-cell="0" aria-label="Top-left, empty"></button>
+        <button type="button" class="game-cell" data-cell="1" aria-label="Top, empty"></button>
+        <button
+          type="button"
+          class="game-cell"
+          data-cell="2"
+          aria-label="Top-right, empty"
+        ></button>
+        <button type="button" class="game-cell" data-cell="3" aria-label="Left, empty"></button>
+        <button type="button" class="game-cell" data-cell="4" aria-label="Centre, empty"></button>
+        <button type="button" class="game-cell" data-cell="5" aria-label="Right, empty"></button>
+        <button
+          type="button"
+          class="game-cell"
+          data-cell="6"
+          aria-label="Bottom-left, empty"
+        ></button>
+        <button type="button" class="game-cell" data-cell="7" aria-label="Bottom, empty"></button>
+        <button
+          type="button"
+          class="game-cell"
+          data-cell="8"
+          aria-label="Bottom-right, empty"
+        ></button>
+      </div>
+
+      <footer class="game-foot">
+        <p class="game-score">
+          <span><strong data-wins>0</strong> wins</span>
+          <span><strong data-draws>0</strong> draws</span>
+          <span><strong data-losses>0</strong> losses</span>
+        </p>
+        <button type="button" class="game-reset" data-game-reset>New round</button>
+      </footer>
+    </dialog>
+
+    <script>
+      // Drive scroll-revealed animations via IntersectionObserver so they work
+      // consistently across browsers, not just those supporting animation-timeline: view().
+      (function () {
+        var targets = document.querySelectorAll(".reveal");
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (reduced || !("IntersectionObserver" in window)) {
+          targets.forEach(function (el) {
+            el.classList.add("is-visible");
+          });
+          return;
+        }
+
+        var io = new IntersectionObserver(
+          function (entries, observer) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -8% 0px" },
+        );
+
+        targets.forEach(function (el) {
+          io.observe(el);
+        });
+      })();
+
+      // Tic-tac-toe — Schalk vs DuckDuckGo, the take-home rematch.
+      // Player is duck, AI is fox. AI plays the classic Newell-and-Simon
+      // strategy minus the perfect minimax — smart enough to defend, beatable
+      // if the player sets up a fork.
+      (function () {
+        var dialog = document.getElementById("ticgame");
+        var teaser = document.querySelector(".game-teaser");
+        if (!dialog || !teaser) return;
+
+        var cells = Array.prototype.slice.call(dialog.querySelectorAll(".game-cell"));
+        var status = dialog.querySelector("[data-game-status]");
+        var winsEl = dialog.querySelector("[data-wins]");
+        var drawsEl = dialog.querySelector("[data-draws]");
+        var lossesEl = dialog.querySelector("[data-losses]");
+        var closeBtn = dialog.querySelector("[data-game-close]");
+        var resetBtn = dialog.querySelector("[data-game-reset]");
+
+        var DUCK = "duck";
+        var FOX = "fox";
+        var EMOJI = { duck: "🦆", fox: "🦊" };
+        var POSITIONS = [
+          "Top-left",
+          "Top",
+          "Top-right",
+          "Left",
+          "Centre",
+          "Right",
+          "Bottom-left",
+          "Bottom",
+          "Bottom-right",
+        ];
+
+        var LINES = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ];
+
+        var board = new Array(9).fill(null);
+        var gameOver = false;
+        var score = { wins: 0, draws: 0, losses: 0 };
+
+        function checkResult(b) {
+          for (var i = 0; i < LINES.length; i++) {
+            var a = LINES[i][0],
+              c = LINES[i][1],
+              d = LINES[i][2];
+            if (b[a] && b[a] === b[c] && b[a] === b[d]) {
+              return { winner: b[a], line: LINES[i] };
+            }
+          }
+          var allFilled = b.every(function (x) {
+            return x !== null;
+          });
+          return allFilled ? { winner: "draw" } : null;
+        }
+
+        function findWinningMove(b, player) {
+          for (var i = 0; i < 9; i++) {
+            if (b[i] === null) {
+              var test = b.slice();
+              test[i] = player;
+              var result = checkResult(test);
+              if (result && result.winner === player) return i;
+            }
+          }
+          return -1;
+        }
+
+        function pickRandom(indices) {
+          return indices[Math.floor(Math.random() * indices.length)];
+        }
+
+        function aiMove(b) {
+          // 1. Take winning move if available.
+          var win = findWinningMove(b, FOX);
+          if (win !== -1) return win;
+          // 2. Block opponent's winning move.
+          var block = findWinningMove(b, DUCK);
+          if (block !== -1) return block;
+          // 3. Take centre if open.
+          if (b[4] === null) return 4;
+          // 4. Take any open corner.
+          var corners = [0, 2, 6, 8].filter(function (i) {
+            return b[i] === null;
+          });
+          if (corners.length) return pickRandom(corners);
+          // 5. Take any open side.
+          var sides = [1, 3, 5, 7].filter(function (i) {
+            return b[i] === null;
+          });
+          return pickRandom(sides);
+        }
+
+        function render() {
+          cells.forEach(function (cell, i) {
+            var val = board[i];
+            cell.textContent = val ? EMOJI[val] : "";
+            cell.disabled = !!val || gameOver;
+            var label = POSITIONS[i] + ", " + (val ? val : "empty");
+            cell.setAttribute("aria-label", label);
+          });
+          winsEl.textContent = score.wins;
+          drawsEl.textContent = score.draws;
+          lossesEl.textContent = score.losses;
+        }
+
+        function highlightLine(line) {
+          if (!line) return;
+          line.forEach(function (i) {
+            cells[i].classList.add("game-cell--winning");
+          });
+        }
+
+        function clearHighlight() {
+          cells.forEach(function (c) {
+            c.classList.remove("game-cell--winning");
+          });
+        }
+
+        function finishRound(result) {
+          gameOver = true;
+          if (result.winner === DUCK) {
+            score.wins++;
+            status.textContent = "🦆 wins. Take that, fox.";
+          } else if (result.winner === FOX) {
+            score.losses++;
+            status.textContent = "🦊 wins this round. Try again.";
+          } else {
+            status.textContent = "A draw — duck and fox in stalemate.";
+            score.draws++;
+          }
+          highlightLine(result.line);
+          render();
+        }
+
+        function playerMove(index) {
+          if (gameOver || board[index] !== null) return;
+          board[index] = DUCK;
+          render();
+
+          var result = checkResult(board);
+          if (result) {
+            finishRound(result);
+            return;
+          }
+
+          status.textContent = "🦊 is thinking…";
+          render();
+          setTimeout(function () {
+            var aiIndex = aiMove(board);
+            board[aiIndex] = FOX;
+            render();
+
+            var afterAi = checkResult(board);
+            if (afterAi) {
+              finishRound(afterAi);
+            } else {
+              status.textContent = "Your move, duck.";
+            }
+          }, 450);
+        }
+
+        function resetRound() {
+          board = new Array(9).fill(null);
+          gameOver = false;
+          clearHighlight();
+          status.textContent = "Your move, duck.";
+          render();
+        }
+
+        cells.forEach(function (cell, i) {
+          cell.addEventListener("click", function () {
+            playerMove(i);
+          });
+        });
+
+        resetBtn.addEventListener("click", resetRound);
+        closeBtn.addEventListener("click", function () {
+          dialog.close();
+        });
+
+        // Close when clicking the backdrop (the dialog element itself receives
+        // the click when the backdrop is the target).
+        dialog.addEventListener("click", function (e) {
+          if (e.target === dialog) dialog.close();
+        });
+
+        teaser.addEventListener("click", function () {
+          resetRound();
+          dialog.showModal();
+        });
+      })();
+    </script>
   </body>
 </html>
